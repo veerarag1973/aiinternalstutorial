@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Enhanced typography system */
+  html {
+    @apply antialiased;
+    font-feature-settings: "kern", "liga", "calt";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Optimal reading width */
+  article {
+    max-width: 65ch;
+  }
+
+  /* Code improvements */
+  pre {
+    @apply overflow-x-auto shadow-lg;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  code {
+    @apply font-mono;
+    font-size: 0.875em;
+    letter-spacing: -0.01em;
+  }
+
+  /* Enhanced focus states */
+  a:focus-visible,
+  button:focus-visible {
+    @apply outline-2 outline-offset-2 outline-blue-600 rounded;
+  }
+
+  /* Better text rendering */
+  p, li, td, th {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Smooth transitions */
+  * {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+}
+
+@layer components {
+  /* Callout boxes */
+  .callout {
+    @apply p-4 rounded-lg border-l-4 my-6;
+  }
+
+  .callout-info {
+    @apply callout bg-blue-50 border-blue-500 text-blue-900;
+  }
+
+  .callout-warning {
+    @apply callout bg-yellow-50 border-yellow-500 text-yellow-900;
+  }
+
+  .callout-tip {
+    @apply callout bg-green-50 border-green-500 text-green-900;
+  }
+
+  .callout-danger {
+    @apply callout bg-red-50 border-red-500 text-red-900;
+  }
+
+  /* Code block with copy button */
+  .code-block-wrapper {
+    @apply relative;
+  }
+
+  .copy-button {
+    @apply absolute top-2 right-2 px-3 py-1 text-xs font-medium rounded 
+    bg-gray-700 text-gray-200 
+    hover:bg-gray-600 focus:opacity-100 transition-opacity;
+  }
+  
+  .code-block-wrapper:hover .copy-button {
+    opacity: 1;
+  }
+
+  /* Skip to content link */
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 
+    focus:z-50 focus:px-4 focus:py-2 focus:bg-gray-900 focus:text-white focus:rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600;
+  }
+
+  /* Touch-friendly tap targets (minimum 44x44px) */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Table of contents */
+  .toc-link {
+    @apply block py-2 px-3 text-sm text-gray-600 hover:text-gray-900 
+    hover:bg-gray-50 rounded transition-colors touch-manipulation;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .toc-link.active {
+    @apply text-blue-600 bg-blue-50 font-medium;
+  }
+
+  /* Reading progress bar */
+  .reading-progress {
+    @apply fixed top-0 left-0 h-1 bg-blue-600 z-50 transition-all duration-150;
+  }
+}
+
+@layer utilities {
+  /* Print styles */
+  @media print {
+    .no-print,
+    nav,
+    footer,
+    aside,
+    button,
+    .copy-button,
+    .reading-progress {
+      display: none !important;
+    }
+    
+    body {
+      @apply text-black bg-white;
+      font-size: 12pt;
+      line-height: 1.5;
+    }
+    
+    h1 { 
+      font-size: 24pt; 
+      margin-top: 0;
+      page-break-after: avoid;
+    }
+    h2 { 
+      font-size: 18pt; 
+      margin-top: 16pt;
+      page-break-after: avoid;
+    }
+    h3 { 
+      font-size: 14pt; 
+      margin-top: 12pt;
+      page-break-after: avoid;
+    }
+    
+    p, li {
+      orphans: 3;
+      widows: 3;
+    }
+    
+    a {
+      @apply text-black underline;
+      text-decoration-color: #666;
+    }
+    
+    a[href^="http"]:after {
+      content: " (" attr(href) ")";
+      font-size: 9pt;
+      color: #666;
+      word-break: break-all;
+    }
+    
+    a[href^="#"]:after,
+    a[href^="/"]:after {
+      content: "";
+    }
+    
+    pre, code {
+      @apply break-words;
+      border: 1px solid #ccc;
+      page-break-inside: avoid;
+      background: #f5f5f5 !important;
+      color: #000 !important;
+    }
+    
+    pre {
+      padding: 8pt !important;
+      margin: 8pt 0 !important;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    img {
+      max-width: 100% !important;
+      page-break-inside: avoid;
+    }
+    
+    table {
+      page-break-inside: avoid;
+      border-collapse: collapse;
+    }
+    
+    thead {
+      display: table-header-group;
+    }
+    
+    tr {
+      page-break-inside: avoid;
+    }
+    
+    article {
+      max-width: 100% !important;
+    }
+    
+    .prose {
+      max-width: 100% !important;
+    }
+  }
+}

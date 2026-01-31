@@ -1,0 +1,238 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { 
+  Shield, 
+  Terminal, 
+  Cpu, 
+  Zap, 
+  Server, 
+  BookOpen, 
+  CheckCircle, 
+  ChevronRight, 
+  Activity, 
+  Lock 
+} from 'lucide-react';
+
+const LandingPage = () => {
+  const [text, setText] = useState('');
+  const [phase, setPhase] = useState(0);
+
+  // Cycling Terminal Messages
+  const terminalPhases = [
+    "INITIALIZING MLOPS PIPELINE...",
+    "CONTAINERIZING MODEL WEIGHTS...",
+    "DEPLOYING TO PRODUCTION CLUSTER...",
+    "SCANNING FOR PII LEAKAGE...",
+    "VULNERABILITY DETECTED: PROMPT INJECTION",
+    "APPLYING SECURITY PATCH...",
+    "SYSTEM SECURE. DEPLOYMENT COMPLETE."
+  ];
+
+  useEffect(() => {
+    let currentText = "";
+    let currentIndex = 0;
+    let phaseIndex = 0;
+    let isDeleting = false;
+    let timeout: NodeJS.Timeout;
+
+    const type = () => {
+      const fullText = terminalPhases[phaseIndex];
+      
+      if (isDeleting) {
+        currentText = fullText.substring(0, currentText.length - 1);
+        setText(currentText);
+      } else {
+        currentText = fullText.substring(0, currentText.length + 1);
+        setText(currentText);
+      }
+
+      let typeSpeed = isDeleting ? 20 : 50;
+
+      if (!isDeleting && currentText === fullText) {
+        typeSpeed = 2000; // Pause at end of sentence
+        isDeleting = true;
+      } else if (isDeleting && currentText === "") {
+        isDeleting = false;
+        phaseIndex = (phaseIndex + 1) % terminalPhases.length;
+        setPhase(phaseIndex);
+      }
+
+      timeout = setTimeout(type, typeSpeed);
+    };
+
+    timeout = setTimeout(type, 100);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-black text-gray-300 font-mono selection:bg-green-900 selection:text-green-100">
+      
+      {/* Navigation */}
+      <nav className="border-b border-gray-800 bg-black/80 backdrop-blur-md fixed w-full z-50">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Terminal className="w-5 h-5 text-green-500" />
+            <span className="text-white font-bold tracking-wider">AI_INTERNALS</span>
+          </div>
+          <div className="hidden md:flex space-x-8 text-xs font-bold tracking-widest">
+            <a href="#engineering" className="hover:text-green-400 transition-colors">01_ENGINEERING</a>
+            <a href="#shield" className="hover:text-green-400 transition-colors">02_SHIELD</a>
+            <a href="#labs" className="hover:text-green-400 transition-colors">03_LABS</a>
+          </div>
+          <button className="bg-white hover:bg-gray-200 text-black font-bold px-4 py-2 text-xs rounded transition-all">
+            CONSULT_AUDIT
+          </button>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-[90vh] flex items-center">
+        <div className="flex flex-col md:flex-row items-center justify-between w-full">
+          <div className="md:w-1/2 space-y-8">
+            <div className="inline-flex items-center space-x-2 bg-gray-900 border border-gray-800 px-3 py-1 rounded text-xs text-green-500">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              <span>SYSTEMS OPERATIONAL</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-none">
+              ARCHITECT.<br />
+              SECURE.<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-700">
+                DEPLOY.
+              </span>
+            </h1>
+            
+            <p className="text-xl text-gray-400 max-w-lg leading-relaxed">
+              We take AI from fragile research demos to hardened production systems. The complete lifecycle partner for the AI era.
+            </p>
+
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+              <button className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-black px-8 py-4 rounded font-bold transition-all">
+                <span>Start Project</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <button className="flex items-center justify-center space-x-2 border border-gray-700 text-gray-300 px-8 py-4 rounded font-bold hover:border-white hover:text-white transition-all">
+                <span>View Case Studies</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Terminal Visualization */}
+          <div className="md:w-1/2 mt-12 md:mt-0 w-full">
+            <div className="relative bg-[#0a0a0a] border border-gray-800 p-6 rounded-lg shadow-2xl font-mono text-sm h-64 flex flex-col">
+              <div className="flex items-center justify-between mb-4 border-b border-gray-800 pb-4">
+                <div className="flex space-x-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+                </div>
+                <div className="text-gray-600 text-xs uppercase tracking-widest">root@ai-internals:~</div>
+              </div>
+              <div className="flex-1 font-bold">
+                <p className="text-green-500">$ {text}<span className="animate-pulse">_</span></p>
+              </div>
+              <div className="mt-4 grid grid-cols-3 gap-2 text-[10px] text-gray-600 uppercase tracking-widest">
+                <div className={`border-t pt-2 ${phase < 3 ? 'text-green-500 border-green-500' : 'border-gray-800'}`}>01 BUILD</div>
+                <div className={`border-t pt-2 ${phase >= 3 && phase < 5 ? 'text-green-500 border-green-500' : 'border-gray-800'}`}>02 SECURE</div>
+                <div className={`border-t pt-2 ${phase >= 5 ? 'text-green-500 border-green-500' : 'border-gray-800'}`}>03 LAUNCH</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 01 ENGINEERING */}
+      <section id="engineering" className="py-24 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row gap-12 items-start">
+            <div className="md:w-1/3">
+              <div className="w-12 h-12 bg-blue-900/20 rounded-lg flex items-center justify-center mb-6">
+                <Cpu className="w-6 h-6 text-blue-500" />
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-4">01_ENGINEERING</h2>
+              <p className="text-gray-400">
+                Your notebook works. But does it scale? We re-architect research code into fault-tolerant, low-latency production APIs.
+              </p>
+            </div>
+            <div className="md:w-2/3 grid md:grid-cols-2 gap-6">
+              <div className="bg-gray-900/30 p-6 rounded-xl border border-gray-800 hover:border-blue-500/50 transition-colors">
+                <h3 className="text-white font-bold mb-2 flex items-center"><Server className="w-4 h-4 mr-2 text-blue-500"/> MLOps Pipelines</h3>
+                <p className="text-sm text-gray-500">Automated training, versioning, and deployment (CI/CD) for model weights.</p>
+              </div>
+              <div className="bg-gray-900/30 p-6 rounded-xl border border-gray-800 hover:border-blue-500/50 transition-colors">
+                <h3 className="text-white font-bold mb-2 flex items-center"><Zap className="w-4 h-4 mr-2 text-blue-500"/> Inference Optimization</h3>
+                <p className="text-sm text-gray-500">Reduce latency by 40% and cut GPU costs with quantization and distillation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 02 SHIELD */}
+      <section id="shield" className="py-24 border-t border-gray-800 bg-gray-900/20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row-reverse gap-12 items-start">
+            <div className="md:w-1/3">
+              <div className="w-12 h-12 bg-green-900/20 rounded-lg flex items-center justify-center mb-6">
+                <Shield className="w-6 h-6 text-green-500" />
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-4">02_SHIELD</h2>
+              <p className="text-gray-400">
+                The AI Internals Audit. We Red Team your models and build the privacy guardrails that keep you compliant.
+              </p>
+            </div>
+            <div className="md:w-2/3 grid md:grid-cols-2 gap-6">
+              <div className="bg-black p-6 rounded-xl border border-gray-800 hover:border-green-500/50 transition-colors">
+                <h3 className="text-white font-bold mb-2 flex items-center"><Activity className="w-4 h-4 mr-2 text-green-500"/> Red Teaming</h3>
+                <p className="text-sm text-gray-500">We try to break your AI. Prompt injection, PII extraction, and jailbreaking tests.</p>
+              </div>
+              <div className="bg-black p-6 rounded-xl border border-gray-800 hover:border-green-500/50 transition-colors">
+                <h3 className="text-white font-bold mb-2 flex items-center"><Lock className="w-4 h-4 mr-2 text-green-500"/> Privacy Firewall</h3>
+                <p className="text-sm text-gray-500">Real-time PII scrubbing and output filtering before data hits the user.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 03 LABS */}
+      <section id="labs" className="py-24 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row gap-12 items-start">
+            <div className="md:w-1/3">
+              <div className="w-12 h-12 bg-purple-900/20 rounded-lg flex items-center justify-center mb-6">
+                <BookOpen className="w-6 h-6 text-purple-500" />
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-4">03_LABS</h2>
+              <p className="text-gray-400">
+                Don't just hire us. Become us. Advanced technical workshops for engineering teams building on the bleeding edge.
+              </p>
+            </div>
+            <div className="md:w-2/3 grid md:grid-cols-2 gap-6">
+              <div className="bg-gray-900/30 p-6 rounded-xl border border-gray-800 hover:border-purple-500/50 transition-colors">
+                <h3 className="text-white font-bold mb-2">Corporate Workshops</h3>
+                <p className="text-sm text-gray-500">"LLM Security Architecture" and "Production RAG Systems" for your internal teams.</p>
+              </div>
+              <div className="bg-gray-900/30 p-6 rounded-xl border border-gray-800 hover:border-purple-500/50 transition-colors">
+                <h3 className="text-white font-bold mb-2">Compliance Training</h3>
+                <p className="text-sm text-gray-500">Teaching developers how to write code that adheres to the EU AI Act.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="py-12 border-t border-gray-800 text-center text-gray-600 text-sm bg-black">
+        <div className="flex items-center justify-center space-x-2 mb-4 opacity-50">
+           <Terminal className="w-4 h-4" />
+           <span className="font-bold">AI_INTERNALS</span>
+        </div>
+        <p>&copy; 2025 AI INTERNALS. All systems operational.</p>
+      </footer>
+    </div>
+  );
+};
+
+export default LandingPage;
