@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpen, Code, Share2 } from "lucide-react";
+import { BookOpen, Code, Share2, Linkedin, Youtube, Facebook, Mail } from "lucide-react";
 
 export const metadata = {
   title: "About",
@@ -122,6 +122,73 @@ export default function AboutPage() {
             and make it easier for the next person. If you're also learning, you're in the right place. 
             We're learning together.
           </p>
+
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-12 mb-4">
+            Get in Touch
+          </h2>
+          <p className="text-gray-700 mb-6">
+            Have questions, found an error, or just want to connect? Reach out through any of these channels:
+          </p>
+          
+          <div className="grid sm:grid-cols-2 gap-4 mb-12">
+            <a 
+              href="https://www.linkedin.com/in/bedrockai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-4 bg-white border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors group"
+            >
+              <div className="bg-blue-600 text-white p-2 rounded group-hover:bg-blue-700 transition-colors">
+                <Linkedin className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">LinkedIn</div>
+                <div className="text-sm text-gray-600">Connect professionally</div>
+              </div>
+            </a>
+
+            <a 
+              href="https://www.youtube.com/@aiintamilofficial"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-4 bg-white border-2 border-gray-200 rounded-lg hover:border-red-500 hover:bg-red-50 transition-colors group"
+            >
+              <div className="bg-red-600 text-white p-2 rounded group-hover:bg-red-700 transition-colors">
+                <Youtube className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">YouTube</div>
+                <div className="text-sm text-gray-600">Video tutorials</div>
+              </div>
+            </a>
+
+            <a 
+              href="https://www.facebook.com/aiintamilofficial"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-4 bg-white border-2 border-gray-200 rounded-lg hover:border-blue-600 hover:bg-blue-50 transition-colors group"
+            >
+              <div className="bg-blue-600 text-white p-2 rounded group-hover:bg-blue-700 transition-colors">
+                <Facebook className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">Facebook</div>
+                <div className="text-sm text-gray-600">Community updates</div>
+              </div>
+            </a>
+
+            <a 
+              href="mailto:veera.rag1973@gmail.com"
+              className="flex items-center gap-3 p-4 bg-white border-2 border-gray-200 rounded-lg hover:border-gray-600 hover:bg-gray-50 transition-colors group"
+            >
+              <div className="bg-gray-600 text-white p-2 rounded group-hover:bg-gray-700 transition-colors">
+                <Mail className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">Email</div>
+                <div className="text-sm text-gray-600">Direct contact</div>
+              </div>
+            </a>
+          </div>
 
           <div className="bg-gray-50 border border-gray-200 p-6 sm:p-8 rounded-lg mt-12 text-center">
             <p className="text-lg sm:text-xl text-gray-900 mb-4">
