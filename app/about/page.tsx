@@ -147,6 +147,21 @@ export default function AboutPage() {
             </a>
 
             <a 
+              href="https://www.youtube.com/@BedrockAI2025"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 p-4 bg-white border-2 border-gray-200 rounded-lg hover:border-red-500 hover:bg-red-50 transition-colors group"
+            >
+              <div className="bg-red-600 text-white p-2 rounded group-hover:bg-red-700 transition-colors">
+                <Youtube className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">YouTube (English)</div>
+                <div className="text-sm text-gray-600">Video tutorials</div>
+              </div>
+            </a>
+
+            <a 
               href="https://www.youtube.com/@aiintamilofficial"
               target="_blank"
               rel="noopener noreferrer"
@@ -156,8 +171,8 @@ export default function AboutPage() {
                 <Youtube className="w-5 h-5" />
               </div>
               <div className="text-left">
-                <div className="font-semibold text-gray-900">YouTube</div>
-                <div className="text-sm text-gray-600">Video tutorials</div>
+                <div className="font-semibold text-gray-900">YouTube (Tamil)</div>
+                <div className="text-sm text-gray-600">தமிழ் வீடியோக்கள்</div>
               </div>
             </a>
 
@@ -183,9 +198,9 @@ export default function AboutPage() {
               <div className="bg-gray-600 text-white p-2 rounded group-hover:bg-gray-700 transition-colors">
                 <Mail className="w-5 h-5" />
               </div>
-              <div className="text-left">
+              <div className="text-left flex-1">
                 <div className="font-semibold text-gray-900">Email</div>
-                <div className="text-sm text-gray-600">Direct contact</div>
+                <div className="text-sm text-gray-600 break-all">veera.rag1973@gmail.com</div>
               </div>
             </a>
           </div>
