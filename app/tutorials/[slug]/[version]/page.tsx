@@ -9,6 +9,7 @@ import { ReadingProgress } from '@/components/ReadingProgress';
 import { TableOfContents } from '@/components/TableOfContents';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TutorialContent } from '@/components/TutorialContent';
+import { SocialShare } from '@/components/SocialShare';
 import { Clock, Calendar } from 'lucide-react';
 
 export async function generateStaticParams() {
@@ -19,11 +20,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string; version: string };
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string; version: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
   const tutorialContent = getTutorialContent(params.slug, params.version);
   
   if (!tutorialContent) {
@@ -54,11 +54,10 @@ async function markdownToHtml(markdown: string) {
   return result.toString();
 }
 
-export default async function TutorialVersionPage({
-  params,
-}: {
-  params: { slug: string; version: string };
+export default async function TutorialVersionPage(props: {
+  params: Promise<{ slug: string; version: string }>;
 }) {
+  const params = await props.params;
   const tutorialContent = getTutorialContent(params.slug, params.version);
   
   if (!tutorialContent) {
@@ -98,18 +97,18 @@ export default async function TutorialVersionPage({
                 <span className="flex items-center text-xs sm:text-sm text-gray-600">
                   <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                   <span className="hidden sm:inline">
-                    {new Date(tutorialContent.meta.published_at).toLocaleDateString('en-US', { 
+                    {tutorialContent.meta.published_at ? new Date(tutorialContent.meta.published_at).toLocaleDateString('en-US', { 
                       year: 'numeric', 
                       month: 'long', 
                       day: 'numeric' 
-                    })}
+                    }) : 'N/A'}
                   </span>
                   <span className="sm:hidden">
-                    {new Date(tutorialContent.meta.published_at).toLocaleDateString('en-US', { 
+                    {tutorialContent.meta.published_at ? new Date(tutorialContent.meta.published_at).toLocaleDateString('en-US', { 
                       year: 'numeric', 
                       month: 'short', 
                       day: 'numeric' 
-                    })}
+                    }) : 'N/A'}
                   </span>
                 </span>
               </div>
@@ -153,6 +152,11 @@ export default async function TutorialVersionPage({
               )}
               
               <TutorialContent contentHtml={contentHtml} />
+              
+              <SocialShare 
+                title={tutorialContent.meta.title}
+                url={`/tutorials/${params.slug}/${params.version}`}
+              />
               
               <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-gray-200">
                 <Link 

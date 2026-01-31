@@ -1,11 +1,8 @@
-'use client';
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
 import { Analytics } from '@vercel/analytics/react';
+import Navigation from '@/components/Navigation';
 import "./globals.css";
 
 const inter = Inter({ 
@@ -14,83 +11,47 @@ const inter = Inter({
   preload: true,
 });
 
-// Note: metadata cannot be exported from client components
-// Metadata is defined in the root layout.metadata.ts or via generateMetadata
-
-function Navigation() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  return (
-    <nav className="border-b border-gray-200 bg-white sticky top-0 z-40 backdrop-blur-sm bg-white/90">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="h-16 flex items-center justify-between">
-          <Link 
-            href="/" 
-            className="font-bold text-lg sm:text-xl text-gray-900 hover:text-gray-700 transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            AI Internals
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-6 lg:space-x-8 text-sm font-medium">
-            <Link href="/" className="text-gray-700 hover:text-gray-900 transition-colors py-2">
-              Home
-            </Link>
-            <Link href="/start-here" className="text-gray-700 hover:text-gray-900 transition-colors py-2">
-              Start Here
-            </Link>
-            <Link href="/tutorials" className="text-gray-700 hover:text-gray-900 transition-colors py-2">
-              Tutorials
-            </Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-900"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-expanded={mobileMenuOpen}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" aria-hidden="true" />
-            ) : (
-              <Menu className="h-6 w-6" aria-hidden="true" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden pb-4 space-y-1">
-            <Link
-              href="/"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              href="/start-here"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Start Here
-            </Link>
-            <Link
-              href="/tutorials"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Tutorials
-            </Link>
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-}
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://aiinternals.com'),
+  title: {
+    default: 'AI Internals - Production AI Engineering',
+    template: '%s | AI Internals',
+  },
+  description: 'A curriculum-driven guide to building, deploying, and securing production AI systems. Structured engineering education without the fluff.',
+  keywords: ['AI', 'Machine Learning', 'Production AI', 'AI Engineering', 'AI Systems', 'Software Engineering', 'Deep Learning', 'MLOps'],
+  authors: [{ name: 'AI Internals' }],
+  creator: 'AI Internals',
+  publisher: 'AI Internals',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: '/',
+    siteName: 'AI Internals',
+    title: 'AI Internals - Production AI Engineering',
+    description: 'A curriculum-driven guide to building, deploying, and securing production AI systems.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Internals - Production AI Engineering',
+    description: 'A curriculum-driven guide to building, deploying, and securing production AI systems.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+};
 
 export default function RootLayout({
   children,
@@ -100,7 +61,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="alternate" type="application/rss+xml" title="AI Internals RSS Feed" href="/feed.xml" />
       </head>
       <body className={inter.className}>
         {/* Skip to main content for accessibility */}
@@ -126,13 +88,13 @@ export default function RootLayout({
               Content remains permanently accessible. Old versions never deleted.
             </p>
             <div className="flex justify-center gap-4 text-xs text-gray-600">
-              <a href="/feed.xml" className="hover:text-gray-900 transition-colors" target="_blank" rel="noopener noreferrer">
+              <Link href="/feed.xml" className="hover:text-gray-900 transition-colors">
                 RSS Feed
-              </a>
+              </Link>
               <span>•</span>
-              <a href="/sitemap.xml" className="hover:text-gray-900 transition-colors" target="_blank" rel="noopener noreferrer">
+              <Link href="/sitemap.xml" className="hover:text-gray-900 transition-colors">
                 Sitemap
-              </a>
+              </Link>
             </div>
           </div>
         </footer>

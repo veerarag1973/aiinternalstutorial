@@ -6,11 +6,10 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default function TutorialSlugPage({
-  params,
-}: {
-  params: { slug: string };
+export default async function TutorialSlugPage(props: {
+  params: Promise<{ slug: string }>;
 }) {
+  const params = await props.params;
   const tutorial = getTutorialBySlug(params.slug);
   
   if (!tutorial) {
